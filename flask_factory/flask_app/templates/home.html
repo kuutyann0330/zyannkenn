@@ -1,0 +1,13 @@
+{% extends 'common/layout.html' %}
+{% block content %}
+    <h1>MediaPipe Camera Test</h1>
+    
+    <div style="position: relative;">
+        <video id="input_video" autoplay playsinline style="width: 640px; height: 480px;"></video>
+        <canvas id="output_canvas" width="640px" height="480px" 
+                style="position: absolute; left: 0; top: 0;"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+{% endblock %}
