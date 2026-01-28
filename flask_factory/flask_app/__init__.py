@@ -15,8 +15,10 @@ def create_app():
     # Blueprintの登録
     from flask_app.controllers.index import index_bp
     from flask_app.controllers.sample import sample_bp
+    from flask_factory.flask_app.controllers.logic import logic_bp
     app.register_blueprint(index_bp)
     app.register_blueprint(sample_bp)
+    app.register_blueprint(logic_bp)
 
     return app
 
