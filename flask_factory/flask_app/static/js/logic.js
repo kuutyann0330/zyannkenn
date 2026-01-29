@@ -73,7 +73,8 @@ const createHandLandmarker = async () => {
     let results = undefined;
     console.log(video);
     async function predictWebcam() {
-      canvasElement.style.width = video.videoWidth;;
+      // video.videoWidth = 640　ブラウザ側が動画データに合わせてサイズを入れてくれる
+      canvasElement.style.width = video.videoWidth;
       canvasElement.style.height = video.videoHeight;
       canvasElement.width = video.videoWidth;
       canvasElement.height = video.videoHeight;
