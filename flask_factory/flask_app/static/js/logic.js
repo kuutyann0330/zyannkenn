@@ -3,6 +3,8 @@ import {
     FilesetResolver
   } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 
+  const video = document.getElementById("webcam")
+  const webcamRunning = false;
 //   インポートの読み込み確認
   console.log("HandLandmarkerの読み込みに成功しました:", HandLandmarker);
 
@@ -23,7 +25,7 @@ const createHandLandmarker = async () => {
     //   渡されるデータの種類 VIDEP or IMAGE
       runningMode: "VIDEO",
       //   認識する手の数
-      numHands: 2
+      numHands: 1
     });
     demosSection.classList.remove("invisible");
   };
@@ -36,20 +38,25 @@ const createHandLandmarker = async () => {
 
   // このブラウザはカメラのサポートしているか確認
   const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia;
-
+  
+  webcamRunning = document.getElementById("webcamButton");
+  
   // イベントハンドラーの作成　ボタンのクリックでlandmarkの描画
   if(hasGetUserMedia()){
     enableWebcamButton = document.getElementById("webcamButton");
     enableWebcamButton.addEventListener("click", enableCam);
+    if(enableWebcamButton.addEventListener("click", enableCam)){
+    }
   } else{
     // console.warn console.log の警告メッセージ版
     console.warn("カメラが対応していません")
   }
-
+  
   // イベントの内容を決定
   function enableCam(event){
     // ！handLandmarker：　！handLandmarkerが準備できていなければ
     if (!handLandmarker){
+      webcamRunning = true;
       console.log("インスタンス化エラー")
       return;
     }
@@ -63,16 +70,17 @@ const createHandLandmarker = async () => {
     navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
       //videoタグに対して取得した映像を張り付けしている
       video.srcObject = stream;
-      //videoタグがデータがロードし始めたらイベント(カメラの描画サイズを計算)を開始する
+      //videoタグがデータがロードし始めたらイベントを開始する
       video.addEventListener("loadeddata", predictWebcam);
     });
   }
-
-    //画面サイズが変更されても表示がバグるのを防ぐために
-    let lastVideoTime = -1;
-    let results = undefined;
-    console.log(video);
-    async function predictWebcam() {
+  
+  // lastVideoTime:ビデオの再生時間から
+  let lastVideoTime = -1;
+  let results = undefined;
+  console.log(video);
+  // 画面サイズが変更されても表示がバグるのを防ぐために
+  async function predictWebcam() {
       // video.videoWidth = 640　ブラウザ側が動画データに合わせてサイズを入れてくれる
       // style.width：キャンパスのブラウザ上の大きさ
       canvasElement.style.width = video.videoWidth;
@@ -92,7 +100,52 @@ const createHandLandmarker = async () => {
       }
       // △△ここは念のために書いている場所です本来は必要ありません！△△
       
+      // predictWebcam が 動いてからの時間を取得して変数に入れる
+      // detecFOrVideo モードのAIは、前のフレームからどれくらい時間が経過したかを確認する必要があるため
+      
+      //startTimeMs：AIに入れる用の変数
+      let startTimeMs = performance.now();
+      // ここで前のフレームから進んでいるのか確認することで同じフレームを２回解析するのを防ぐ
+      if (lastVideoTime !== video.currentTime)
+        // lastVideoTime:私たちが使う用の変数
+        lastVideoTime = video.currentTime
+        
+        // ここでresultsに手のlandmarkを取得していれる
+        // detectForVideo：これが解析用の関数
+        results = handLandmarker.detectForVideo(video, startTimeMs);
+      }
+        
+      // キャンバスに関する設定を保存する
+      canvasCtx.save();
+
+      // キャンバスの絵を削除している　これで今のフレームの絵だけ描画する
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+
+      // 検出結果が格納されているならば
+      if (results.landmarks) {
+        // ここで定数landmarksにresults.landmarksを代入
+        for (const landmarks of results.landmarks) {
+          // drawConnectors :landmarkの線の描画
+          drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
+            color: "#00FF00", //線の色　ライムグリーン
+            lineWidth: 5 //描画の線のピクセル
+          });
+          //drawLandmarks　:landmarkの点の描画
+          drawLandmarks(canvasCtx, landmarks, { color: "#FF0000", lineWidth: 2 });
+        }
+        // キャンバスの設定をいったんリセットする
+        canvasCtx.restore();
+
+        // ブラウザの準備が整ったら、予測を継続するためにこの関数を再度呼び出してください。
+        if (webcamRunning === true) {
+          window.requestAnimationFrame(predictWebcam);
+        }
+        
+
+
+
+      }
       
 
-    }
+
   
