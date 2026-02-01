@@ -6,7 +6,7 @@ import {
   FilesetResolver
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 
-// import { isPaper, isRock } from './gesture.js';
+import {judgeHand} from './gesture.js';
 
 // ランドマーク取得用AIの初期設定用
 let runningMode = "VIDEO";
@@ -152,6 +152,16 @@ async function predictWebcam() {
       // ランドマークが取得できているか確認用
       //drawLandmarks　:landmarkの点の描画
       drawLandmarks(canvasCtx, landmarks, { color: "#FF0000", lineWidth: 2 });
+      let hand_gestuer = judgeHand(landmarks)
+      if(hand_gestuer == "paper"){
+        console.log("これはパーです")
+      }else if(hand_gestuer == "scissors"){
+        console.log("これはチョキです")
+      }else if(hand_gestuer == "rock"){
+        console.log("これはグーです")
+      }else{
+        console.log("じゃんけんだろぉ")
+      }
     }
 
     
