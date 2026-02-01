@@ -1,18 +1,18 @@
 {% extends 'common/MediaPipe.html' %}
 {% block content %}
-    <h1>MediaPipe Camera Test</h1>
-    
+<h1>MediaPipe Camera Test</h1>
+<!--section : class = incisibleで　JSの許可が出るまでこの機能を隠す　これによってJSがライブラリを読み込むまでのラグをなくす  -->
+<section id="demos" class="invisible">
     <div style="position: relative;">
         <video id="webcam" autoplay playsinline style="width: 640px; height: 480px;"></video>
-        <canvas id="output_canvas" width="640px" height="480px" 
-                style="position: absolute; left: 0; top: 0;"></canvas>
+        <canvas id="output_canvas" width="640px" height="480px" style="position: absolute; left: 0; top: 0;"></canvas>
     </div>
 
     <button id="webcamButton" class="mdc-button mdc-button--raised">
         <span class="mdc-button__ripple"></span>
         <span class="mdc-button__label">実行ボタン</span>
     </button>
-    
+</section>
 
 
 {% endblock %}

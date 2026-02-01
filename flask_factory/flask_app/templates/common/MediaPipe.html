@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flask Template</title>
     <meta name="description" content="">
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href= "{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <main>
         {% block content %}
         {% endblock %}
     </main>
+    <!--drawing_utils：描画用のライブラリ  -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
     <script type="module" src="{{ url_for('static', filename='js/logic.js') }}"></script>

@@ -3,6 +3,7 @@
 }
 h1{
     text-align: center;
+    color: blueviolet;
 }
 
 .game_div{
@@ -20,5 +21,7 @@ h1{
     height: 40px;
 }
 
-
-
+/* 確認用 */
+#output_canvas{
+    border: black inset 1px;
+}
