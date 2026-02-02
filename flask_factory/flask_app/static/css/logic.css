@@ -1,0 +1,58 @@
+h1{
+    text-align: center;
+    color: blueviolet;
+}
+
+/* CSSファイル、または <style> タグ内 */
+.main_contents {
+    display: grid;
+    grid-template-columns: 640px 320px; /* ビデオの幅と右側の幅 */
+    gap: 20px;
+}
+
+.main_left {
+    position: relative;
+    width: 640px;
+    height: 480px;
+}
+
+/* 確認用 */
+#output_canvas{
+    border: black inset 1px;
+    display: inline;
+}
+
+.main_right {
+    display: grid;
+    /* 縦に2分割：上段(3)対下段(1)の比率にする例 */
+    grid-template-rows: 3fr 1fr; 
+    width: 320px;
+    height: 480px;
+    gap: 10px; /* 上下の隙間 */
+}
+
+.npc_gesture_top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff; /* 背景を白に */
+    border: 2px solid #ccc;
+}
+
+.npc_gesture_bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #e0e0e0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* 画像自体のサイズを親枠（npc_gesture_top）に固定する */
+.npc_gesture_top img {
+    width: 100%;       /* 親の幅いっぱいに広げる */
+    height: 100%;      /* 親の高さいっぱいに広げる */
+    object-fit: contain; /* アスペクト比を維持しつつ、枠内に収める（重要！） */
+    background-color: #fff; /* 余白ができる場合は白で埋める */
+}

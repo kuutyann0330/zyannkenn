@@ -6,6 +6,7 @@
     <title>Flask Template</title>
     <meta name="description" content="">
     <link rel="stylesheet" href= "{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href= "{{ url_for('static', filename='css/logic.css') }}">
 </head>
 <body>
     <main>
@@ -17,6 +18,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
     <script type="module" src="{{ url_for('static', filename='js/logic.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/winlose.js') }}"></script>
   
 </body>
+
 </html>

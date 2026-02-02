@@ -6,7 +6,9 @@ import {
   FilesetResolver
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 
-import {judgeHand} from './gesture.js';
+import { judgeHand } from './gesture.js';
+// NPCの手の画像
+document.getElementById("cpu_hand_img").src = "/static/images/hatena.png";
 
 // ランドマーク取得用AIの初期設定用
 let runningMode = "VIDEO";
@@ -24,6 +26,8 @@ const canvasCtx = canvasElement.getContext("2d")
 const demosSection = document.getElementById("demos");
 //   インポートの読み込み確認
 console.log("HandLandmarkerの読み込みに成功しました:", HandLandmarker);
+
+
 
 // インスタンス化
 // インターネットからダウンロードするから非同期関数（async）にしてほかの処理を同時に行う
@@ -56,7 +60,8 @@ const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia;
 if (hasGetUserMedia()) {
   enableWebcamButton = document.getElementById("webcamButton");
   // enableWebcamButton.addEventListener("click", console.log("インベトハンドラー"));
-  enableWebcamButton.addEventListener("click", enableCam); 
+  enableWebcamButton.addEventListener("click", enableCam);
+
 } else {
   // console.warn console.log の警告メッセージ版
   console.warn("カメラが対応していません")
@@ -153,26 +158,28 @@ async function predictWebcam() {
       //drawLandmarks　:landmarkの点の描画
       drawLandmarks(canvasCtx, landmarks, { color: "#FF0000", lineWidth: 2 });
       let hand_gestuer = judgeHand(landmarks)
-      if(hand_gestuer == "paper"){
-        console.log("これはパーです")
-      }else if(hand_gestuer == "scissors"){
-        console.log("これはチョキです")
-      }else if(hand_gestuer == "rock"){
-        console.log("これはグーです")
-      }else{
-        console.log("じゃんけんだろぉ")
+      
+      if (hand_gestuer == "paper") {
+        console.log("これはパーです");
+        document.getElementById("cpu_hand_img").src = "/static/images/paper.png";
+      } else if (hand_gestuer == "scissors") {
+        console.log("これはチョキです");
+        document.getElementById("cpu_hand_img").src = "/static/images/scissors.png";
+      } else if (hand_gestuer == "rock") {
+        console.log("これはグーです");
+        document.getElementById("cpu_hand_img").src = "/static/images/rock.png";
+      } else {
+        console.log("じゃんけんだろ");
+        document.getElementById("cpu_hand_img").src = "/static/images/hatena.png";
       }
     }
-
-    
   }
-    // キャンバスの設定をいったんリセットする
-    canvasCtx.restore();
+  // キャンバスの設定をいったんリセットする
+  canvasCtx.restore();
 
-    // ブラウザの準備が整ったら、予測を継続するためにこの関数を再度呼び出してください。
-    if (webcamRunning == true) {
-      console.log("ボタン押されたよ！")
-      window.requestAnimationFrame(predictWebcam);
-    }
+  // ブラウザの準備が整ったら、予測を継続するためにこの関数を再度呼び出してください。
+  if (webcamRunning == true) {
+    console.log("ボタン押されたよ！")
+    window.requestAnimationFrame(predictWebcam);
+  }
 }
-

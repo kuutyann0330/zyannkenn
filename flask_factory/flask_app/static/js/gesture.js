@@ -34,3 +34,4 @@ export function judgeHand(landmarks) {
 
     return "unknown";
 }
+
