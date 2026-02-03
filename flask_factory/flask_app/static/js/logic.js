@@ -7,8 +7,15 @@ import {
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 
 import { judgeHand } from './gesture.js';
-// NPCの手の画像
-document.getElementById("cpu_hand_img").src = "/static/images/hatena.png";
+import { getnpc_hand } from './winlose.js';
+let npc_hand = "rock";
+npc_hand = getnpc_hand();
+let npc_hand_url = `/static/images/${npc_hand}.png`;
+console.log(npc_hand_url);
+document.getElementById("cpu_hand_img").scr = npc_hand_url;
+
+// document.getElementById("cpu_hand_img").src = "/static/images/${{npc_hand}}.png";
+
 
 // ランドマーク取得用AIの初期設定用
 let runningMode = "VIDEO";
@@ -182,4 +189,5 @@ async function predictWebcam() {
     console.log("ボタン押されたよ！")
     window.requestAnimationFrame(predictWebcam);
   }
+
 }

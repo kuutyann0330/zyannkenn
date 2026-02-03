@@ -10,7 +10,7 @@ function getDistance(p1, p2) {
         Math.pow(p1.z - p2.z, 2) // z（奥行き）も入れると最強です
     );
 }
-
+// export を付けることで、他のJSファイルから import できるようになります
 export function judgeHand(landmarks) {
     // 各指の「指先」と「第1関節」の距離を測る
     // 指が伸びていれば距離が長く、曲がっていれば短くなる
@@ -26,7 +26,7 @@ export function judgeHand(landmarks) {
     const isMiddleActive = middleDistance > threshold;
     const isRingActive = ringDistance > threshold;
     const isPinkyActive = pinkyDistance > threshold;
-
+    
     // あとは同じ判定ロジックが使えます
     if (isIndexActive && isMiddleActive && isRingActive && isPinkyActive) return "paper";
     if (isIndexActive && isMiddleActive && !isRingActive && !isPinkyActive) return "scissors";
@@ -34,4 +34,3 @@ export function judgeHand(landmarks) {
 
     return "unknown";
 }
-

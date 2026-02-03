@@ -1,20 +1,18 @@
-function npc_hand(){
+export function getnpc_hand(){
     let random_hand = Math.floor(Math.random()*3);
-    if (random_hand == 0) {
+    if (random_hand === 0) {
         console.log("これはパーです");
-        document.getElementById("cpu_hand_img").src = "/static/images/paper.png";
         return "paper"
-      } else if (random_hand == 1) {
+      } else if (random_hand === 1) {
         console.log("これはチョキです");
-        document.getElementById("cpu_hand_img").src = "/static/images/scissors.png";
         return "scissors"
       } else {
         console.log("これはグーです");
-        document.getElementById("cpu_hand_img").src = "/static/images/rock.png";
         return "rock"
       } 
 }
-function winlose(hand_gestuer,npc_gestuer){
+// export:外部ファイルから呼び出すときは必ず付けよう
+export function winlose(hand_gestuer,npc_gestuer){
     
 }
 
