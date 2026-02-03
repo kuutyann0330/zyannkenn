@@ -12,7 +12,7 @@ let npc_hand = "rock";
 npc_hand = getnpc_hand();
 let npc_hand_url = `/static/images/${npc_hand}.png`;
 console.log(npc_hand_url);
-document.getElementById("cpu_hand_img").scr = npc_hand_url;
+document.getElementById("cpu_hand_img").src = npc_hand_url;
 
 // document.getElementById("cpu_hand_img").src = "/static/images/${{npc_hand}}.png";
 
@@ -189,5 +189,6 @@ async function predictWebcam() {
     console.log("ボタン押されたよ！")
     window.requestAnimationFrame(predictWebcam);
   }
+
 
 }
