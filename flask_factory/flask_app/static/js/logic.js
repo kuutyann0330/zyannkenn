@@ -15,6 +15,7 @@ console.log(npc_hand_url);
 document.getElementById("cpu_hand_img").src = npc_hand_url;
 
 // document.getElementById("cpu_hand_img").src = "/static/images/${{npc_hand}}.png";
+// document.getElementById("cpu_hand_img").src = "/static/images/rock.png"; 
 
 
 // ランドマーク取得用AIの初期設定用
@@ -189,6 +190,5 @@ async function predictWebcam() {
     console.log("ボタン押されたよ！")
     window.requestAnimationFrame(predictWebcam);
   }
-
 
 }

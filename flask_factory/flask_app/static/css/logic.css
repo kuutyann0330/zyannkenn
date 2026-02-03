@@ -49,10 +49,22 @@ h1{
     font-weight: bold;
 }
 
-/* 画像自体のサイズを親枠（npc_gesture_top）に固定する */
+/* 親要素（枠）のサイズを固定し、はみ出しを隠す */
+.npc_gesture_top {
+    width: 320px;
+    height: 320px; /* 3frの比率に合わせて調整してください */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    overflow: hidden; /* 念のためはみ出しをカット */
+}
+
+/* 画像の設定：ここが最重要 */
 .npc_gesture_top img {
-    width: 100%;       /* 親の幅いっぱいに広げる */
-    height: 100%;      /* 親の高さいっぱいに広げる */
-    object-fit: contain; /* アスペクト比を維持しつつ、枠内に収める（重要！） */
-    background-color: #fff; /* 余白ができる場合は白で埋める */
+    width: 100%;
+    height: 100%;
+    /* 縦横比を維持したまま、枠内に収まる最大サイズになる */
+    object-fit: contain; 
 }
