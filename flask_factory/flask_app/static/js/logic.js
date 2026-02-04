@@ -7,8 +7,8 @@ import {
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 
 import { judgeHand } from './gesture.js';
-import { getnpc_hand } from './winlose.js';
-let npc_hand = "rock";
+import { getnpc_hand, get_hand, winlose } from './winlose.js';
+let npc_hand = "hatena";
 npc_hand = getnpc_hand();
 let npc_hand_url = `/static/images/${npc_hand}.png`;
 console.log(npc_hand_url);
@@ -165,21 +165,16 @@ async function predictWebcam() {
       // ランドマークが取得できているか確認用
       //drawLandmarks　:landmarkの点の描画
       drawLandmarks(canvasCtx, landmarks, { color: "#FF0000", lineWidth: 2 });
-      let hand_gestuer = judgeHand(landmarks)
       
-      if (hand_gestuer == "paper") {
-        console.log("これはパーです");
-        document.getElementById("cpu_hand_img").src = "/static/images/paper.png";
-      } else if (hand_gestuer == "scissors") {
-        console.log("これはチョキです");
-        document.getElementById("cpu_hand_img").src = "/static/images/scissors.png";
-      } else if (hand_gestuer == "rock") {
-        console.log("これはグーです");
-        document.getElementById("cpu_hand_img").src = "/static/images/rock.png";
-      } else {
-        console.log("じゃんけんだろ");
-        document.getElementById("cpu_hand_img").src = "/static/images/hatena.png";
-      }
+      //自分の出した手を判別
+      let player_hand = judgeHand(landmarks)
+      player_hand = get_hand(player_hand)
+      npc_hand = get_hand(npc_hand)
+      console.log("NPCの数値" + npc_hand)
+      
+      let win_or_loss = winlose(player_hand,npc_hand);
+      console.log("対戦結果" + win_or_loss)
+      
     }
   }
   // キャンバスの設定をいったんリセットする
@@ -187,7 +182,7 @@ async function predictWebcam() {
 
   // ブラウザの準備が整ったら、予測を継続するためにこの関数を再度呼び出してください。
   if (webcamRunning == true) {
-    console.log("ボタン押されたよ！")
+    console.log("ボタン押されたよ！");
     window.requestAnimationFrame(predictWebcam);
   }
 

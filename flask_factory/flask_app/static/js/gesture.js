@@ -32,5 +32,5 @@ export function judgeHand(landmarks) {
     if (isIndexActive && isMiddleActive && !isRingActive && !isPinkyActive) return "scissors";
     if (!isIndexActive && !isMiddleActive && !isRingActive && !isPinkyActive) return "rock";
 
-    return "unknown";
+    return "あいこunknown";
 }
